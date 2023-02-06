@@ -57,7 +57,7 @@ import javax.swing.JSlider;
  * 
  * @author Jonnattan Griffiths
  * @since 20/12/2013
- * @version 1.0 Copyright(c) SISDEF - 2013
+ * @version 1.0 Copyright(c) - 2013
  */
 public class toolsUdp extends JFrame implements Observer, Runnable
 {
@@ -595,7 +595,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }
   }
 
-  /** Ckeck que indica si el archivo que se preproduce sera en formato SISDEF */
+  /** Ckeck que indica si el archivo que se preproduce sera en formato */
   private void sendFormatoSisdefActionPerformed(ActionEvent evt)
   {
     lblFrec.setVisible(!chkHexaFormat.isSelected());
