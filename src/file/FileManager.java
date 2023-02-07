@@ -30,7 +30,7 @@ import utils.UtilLine;
  */
 @SuppressWarnings("deprecation")
 public class FileManager extends Observable implements Runnable {
-  public static String APPVERSION = "V1.6";
+  public static String APPVERSION = "V2.0";
   private final static String TAG = "@UDPTOOLS";
   private final static int TOKEN = 3;
   private FileWriter fichero = null;

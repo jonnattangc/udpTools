@@ -542,7 +542,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable {
     });
     rdbDataString.setHorizontalAlignment(SwingConstants.LEFT);
 
-    JLabel lblVersion = new JLabel(FileManager.APPVERSION + " 2017");
+    JLabel lblVersion = new JLabel(FileManager.APPVERSION + " 2023");
     pnlDer.add(lblVersion);
     lblVersion.setFont(FONT_SYSTEM);
     lblVersion.setHorizontalAlignment(SwingConstants.CENTER);
