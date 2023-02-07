@@ -19,7 +19,8 @@ import javax.swing.SwingUtilities;
 import utils.UtilLine;
 
 /**
- * @author jGonzalez
+ * @author Jonnattan Griffiths
+ * @version 1.0 de 21-03-2012 Copyright(c)
  */
 public class UDPWriter implements Runnable
 {

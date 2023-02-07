@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 
  * @author Jonnattan Griffiths
  * @since 20/12/2013
- * @version 1.0 Copyright(c) SISDEF - 2017
+ * @version 1.0 Copyright(c) - 2017
  */
 public class UtilLine
 {
