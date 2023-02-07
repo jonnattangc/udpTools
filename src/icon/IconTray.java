@@ -16,7 +16,7 @@ import utils.PixelsUtils;
 
 /**
  * @author Jonnattan Griffiths
- * @version 1.0 de 21-03-2012 Copyright(c) - SISDEF
+ * @version 1.0 de 21-03-2012 Copyright(c)
  */
 public class IconTray implements ActionListener
 {

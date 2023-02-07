@@ -14,6 +14,10 @@ import java.util.Arrays;
 import java.util.Observable;
 import utils.UtilLine;
 
+/**
+ * @author Jonnattan Griffiths
+ * @version 1.0 de 21-03-2012 Copyright(c)
+*/
 public class UDPListener extends Observable implements Runnable
 {
   private int              port       = 0;

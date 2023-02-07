@@ -24,7 +24,8 @@ import javax.swing.JOptionPane;
 import utils.UtilLine;
 
 /**
- * @author jgonzalez
+ * @author Jonnattan Griffiths
+ * @version 1.0 de 21-03-2012 Copyright(c)
  */
 public class FileManager extends Observable implements Runnable
 {
