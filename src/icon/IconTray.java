@@ -38,7 +38,7 @@ public class IconTray implements ActionListener
 
   private URL getIconPath(String iconFileName)
   {
-    return getClass().getResource("/icon/" + iconFileName);
+    return getClass().getResource("/resources/" + iconFileName);
   }
 
   public boolean hiddenFrame()

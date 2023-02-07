@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  udptools:
+    image: udptools:v1
+    container_name: udptools-compile
+    volumes:
+      - $PWD:/app

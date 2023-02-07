@@ -1,0 +1,2 @@
+Main-Class: program.toolsUdp
+Class-Path: libs/JTattoo-1.6.11.jar
