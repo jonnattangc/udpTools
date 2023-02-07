@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 
 package file;
@@ -24,32 +24,32 @@ import javax.swing.JOptionPane;
 import utils.UtilLine;
 
 /**
- * @author Jonnattan Griffiths
- * @version 1.0 de 21-03-2012 Copyright(c)
+ * @author Copyright(c) Jonnattan Griffiths
+ * @version 1.1 de 07-02-2023
+ * @since {@link  https://dev.jonnattan.com}
  */
-public class FileManager extends Observable implements Runnable
-{
-  public static String            APPVERSION   = "V1.6";
-  private final static String     TAG          = "@UDPTOOLS";
-  private final static int        TOKEN        = 3;
-  private FileWriter              fichero      = null;
-  private PrintWriter             pw           = null;
-  private String                  name         = null;
-  private long                    waitTimeNS   = 0;
-  private boolean                 isCircular   = true;
-  private boolean                 isHexaFormat = true;
-  private String                  title        = "";
-  private JLabel                  lbl          = null;
-  private SimpleDateFormat        hourFormat   = null;
-  private Date                    currentDate  = null;
-  private BlockingQueue<UtilLine> queue        = null;
-  private volatile boolean        terminated   = true;
-  private boolean                 isWrite      = false;
-  private Thread                  thread       = null;
-  private String                  version      = APPVERSION;
+@SuppressWarnings("deprecation")
+public class FileManager extends Observable implements Runnable {
+  public static String APPVERSION = "V1.6";
+  private final static String TAG = "@UDPTOOLS";
+  private final static int TOKEN = 3;
+  private FileWriter fichero = null;
+  private PrintWriter pw = null;
+  private String name = null;
+  private long waitTimeNS = 0;
+  private boolean isCircular = true;
+  private boolean isHexaFormat = true;
+  private String title = "";
+  private JLabel lbl = null;
+  private SimpleDateFormat hourFormat = null;
+  private Date currentDate = null;
+  private BlockingQueue<UtilLine> queue = null;
+  private volatile boolean terminated = true;
+  private boolean isWrite = false;
+  private Thread thread = null;
+  private String version = APPVERSION;
 
-  public FileManager(String name, JLabel albl)
-  {
+  public FileManager(String name, JLabel albl) {
     this.name = name;
     this.lbl = albl;
     this.isWrite = (albl == null);
@@ -58,63 +58,52 @@ public class FileManager extends Observable implements Runnable
     queue = new LinkedBlockingQueue<UtilLine>();
   }
 
-  public void start()
-  {
+  public void start() {
     terminated = false;
     thread = new Thread(this);
     thread.start();
   }
 
-  public void stop()
-  {
+  public void stop() {
     terminated = true;
-    try
-    {
+    try {
       if (thread != null)
         thread.interrupt();
       fileClose();
       if (thread != null)
         thread.join();
-    } catch (Exception e)
-    {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     thread = null;
   }
 
-  public long getFrecuency()
-  {
+  public long getFrecuency() {
     return waitTimeNS;
   }
 
-  public void setCircular(boolean value)
-  {
+  public void setCircular(boolean value) {
     isCircular = value;
   }
 
-  public void setHexaFormat(boolean aValue)
-  {
+  public void setHexaFormat(boolean aValue) {
     this.isHexaFormat = aValue;
   }
 
-  public void setFrecuency_ms(long frecuency)
-  {
+  public void setFrecuency_ms(long frecuency) {
     this.waitTimeNS = frecuency;
   }
 
-  public void setTitle(String p)
-  {
+  public void setTitle(String p) {
     this.title = p;
   }
 
-  public int sendToFile(final UtilLine utilLine)
-  {
+  public int sendToFile(final UtilLine utilLine) {
     queue.add(utilLine.Clone());
     return queue.size();
   }
 
-  private boolean writeInFile(final UtilLine line)
-  {
+  private boolean writeInFile(final UtilLine line) {
     boolean success = true;
     currentDate.setTime(System.currentTimeMillis());
     String out = hourFormat.format(currentDate) + ";" + line.getWaitNS() + ";"
@@ -123,36 +112,28 @@ public class FileManager extends Observable implements Runnable
     return success;
   }
 
-  private String getHexaDataText(final byte[] bytes)
-  {
+  private String getHexaDataText(final byte[] bytes) {
     String out = "";
     for (int i = 0; i < bytes.length; i++)
       out += String.format("%02X", bytes[i]);
     return out;
   }
 
-  public void fileClose()
-  {
-    if (fichero != null)
-    {
-      try
-      {
+  public void fileClose() {
+    if (fichero != null) {
+      try {
         pw.flush();
         fichero.close();
-      } catch (IOException ex)
-      {
+      } catch (IOException ex) {
         ex.printStackTrace();
       }
     }
   }
 
   @Override
-  public void run()
-  {
-    if (isWrite)
-    {
-      try
-      {
+  public void run() {
+    if (isWrite) {
+      try {
         currentDate.setTime(System.currentTimeMillis());
         SimpleDateFormat nameFormat = new SimpleDateFormat(
             "_dd_MM_yyyy_HH_mm_ss");
@@ -161,62 +142,46 @@ public class FileManager extends Observable implements Runnable
         pw = new PrintWriter(fichero);
         pw.println(TAG + ";" + APPVERSION + ";" + title);
         nameFormat = null;
-      } catch (Exception e)
-      {
+      } catch (Exception e) {
         e.printStackTrace();
       }
 
-      while (!terminated)
-      {
-        try
-        {
+      while (!terminated) {
+        try {
           UtilLine line = queue.take();
           if (!writeInFile(line))
             System.err.println("ERROR: Escribiendo Archivo ");
           line = null;
-        } catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
           break;
         }
       }
-    }
-    else
-    {
+    } else {
       int linesCount = 0;
       BufferedReader br = null;
       boolean formato = false;
-      while (!terminated)
-      {
-        try
-        {
+      while (!terminated) {
+        try {
           linesCount = 0;
           br = new BufferedReader(new FileReader(new File(name)));
           String linea = new String();
-          while ((linea = br.readLine()) != null && !terminated)
-          {
+          while ((linea = br.readLine()) != null && !terminated) {
             linesCount++;
-            if (isHexaFormat)
-            {
+            if (isHexaFormat) {
               StringTokenizer stk = new StringTokenizer(linea, ";");
-              if (stk.countTokens() == TOKEN)
-              {
-                while (stk.hasMoreTokens())
-                {
+              if (stk.countTokens() == TOKEN) {
+                while (stk.hasMoreTokens()) {
                   String firstWord = stk.nextToken();
-                  if (firstWord.equals(TAG))
-                  {
+                  if (firstWord.equals(TAG)) {
                     // Primera linea del protocolo
                     // Segundo parametro es la version
                     version = stk.nextToken();
                     System.out.println("HEADER: " + stk.nextToken());
                     formato = true;
-                  }
-                  else
-                  {
+                  } else {
                     setDateHour(firstWord);
                     String sleep = stk.nextToken();
-                    try
-                    {
+                    try {
                       waitTimeNS = Long.parseLong(sleep);
                       // Paso a nano seg para trabajar en nano todo
                       if (version.equalsIgnoreCase(APPVERSION))
@@ -227,30 +192,24 @@ public class FileManager extends Observable implements Runnable
                       notifyObservers(fline);
                       bArray = null;
                       fline = null;
-                    } catch (NumberFormatException ex)
-                    {
+                    } catch (NumberFormatException ex) {
                       // ex.printStackTrace();
                     }
                   }
-                  if (!formato)
-                  {
+                  if (!formato) {
                     JOptionPane.showMessageDialog(null,
                         "The file is not in standard format", "Error",
                         JOptionPane.ERROR_MESSAGE);
                     terminated = true;
                   }
                 }
-              }
-              else
-              {
+              } else {
                 JOptionPane.showMessageDialog(null,
                     "Read file whit fail messagge format", "Error",
                     JOptionPane.ERROR_MESSAGE);
                 terminated = true;
               }
-            }
-            else
-            {
+            } else {
               linea = linea + "\r" + "\n";
               byte[] bArray = getEncode(linea);
               UtilLine fline = new UtilLine(bArray, waitTimeNS);
@@ -260,14 +219,10 @@ public class FileManager extends Observable implements Runnable
               fline = null;
             }
           } // Fin de archivo
-          if (!isCircular)
-          {
+          if (!isCircular) {
             terminated = true;
-          }
-          else
-          {
-            if (!terminated)
-            {
+          } else {
+            if (!terminated) {
               long espera = linesCount * waitTimeNS;
               if (version.equalsIgnoreCase(APPVERSION))
                 espera = (espera / 1000000l);
@@ -277,11 +232,9 @@ public class FileManager extends Observable implements Runnable
             }
           }
           linesCount = 0;
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
           // ex.printStackTrace();
-        } catch (InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
           // ex.printStackTrace();
         }
       }
@@ -290,19 +243,15 @@ public class FileManager extends Observable implements Runnable
     System.out.println("Thread FileManager Terminado");
   }
 
-  private byte[] getEncode(final String lineInHexa)
-  {
+  private byte[] getEncode(final String lineInHexa) {
     ByteBuffer bb;
-    if (isHexaFormat)
-    {
+    if (isHexaFormat) {
       bb = ByteBuffer.allocate(lineInHexa.length() / 2);
       bb.order(ByteOrder.LITTLE_ENDIAN);
       // System.out.println("Linea: " + linea);
       for (int i = 0; i < lineInHexa.length(); i = i + 2)
         bb.put(getHexa(lineInHexa.substring(i, i + 2)));
-    }
-    else
-    {
+    } else {
       bb = ByteBuffer.allocate(lineInHexa.length());
       bb.order(ByteOrder.LITTLE_ENDIAN);
       for (int i = 0; i < lineInHexa.length(); i++)
@@ -315,17 +264,14 @@ public class FileManager extends Observable implements Runnable
     return array;
   }
 
-  private byte getHexa(String dosChars)
-  {
+  private byte getHexa(String dosChars) {
     byte dato = 0;
     String aux = "";
-    for (int i = 0; i < 256; i++)
-    {
+    for (int i = 0; i < 256; i++) {
       aux = Integer.toHexString(i).toUpperCase();
       if (i < 16)
         aux = "0" + aux;
-      if (dosChars.equals(aux))
-      {
+      if (dosChars.equals(aux)) {
         dato = (byte) i;
         break;
       }
@@ -334,13 +280,10 @@ public class FileManager extends Observable implements Runnable
   }
 
   /**
-   * @param dateHour
-   *          the dateHour to set
+   * @param dateHour the dateHour to set
    */
-  public synchronized void setDateHour(String dateHour)
-  {
-    if (lbl != null)
-    {
+  public synchronized void setDateHour(String dateHour) {
+    if (lbl != null) {
       lbl.setText(dateHour);
       lbl.setVisible(true);
     }

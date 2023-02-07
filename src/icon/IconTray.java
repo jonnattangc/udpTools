@@ -15,37 +15,33 @@ import program.toolsUdp;
 import utils.PixelsUtils;
 
 /**
- * @author Jonnattan Griffiths
- * @version 1.0 de 21-03-2012 Copyright(c)
+ * @author Copyright(c) Jonnattan Griffiths
+ * @version 1.1 de 07-02-2023
+ * @since {@link https://dev.jonnattan.com}
  */
-public class IconTray implements ActionListener
-{
+public class IconTray implements ActionListener {
 
-  private SystemTray systemTray         = null;
-  private BufferedImage      icon               = null;
-  private TrayIcon   trayIcon           = null;
-  private PopupMenu  ScreenKeyPopupMenu = null;
-  private MenuItem   mnuSalir           = null;
-  private MenuItem   mnuAbout           = null;
-  private JFrame     frame              = null;
+  private SystemTray systemTray = null;
+  private BufferedImage icon = null;
+  private TrayIcon trayIcon = null;
+  private PopupMenu ScreenKeyPopupMenu = null;
+  private MenuItem mnuSalir = null;
+  private MenuItem mnuAbout = null;
+  private JFrame frame = null;
 
-  public IconTray(JFrame frame)
-  {
+  public IconTray(JFrame frame) {
     icon = PixelsUtils.getInstance()
         .fileToBufferedImage(getIconPath("icon.png"), 16, 16);
     this.frame = frame;
   }
 
-  private URL getIconPath(String iconFileName)
-  {
+  private URL getIconPath(String iconFileName) {
     return getClass().getResource("/resources/" + iconFileName);
   }
 
-  public boolean hiddenFrame()
-  {
+  public boolean hiddenFrame() {
     boolean success = false;
-    if (SystemTray.isSupported())
-    {
+    if (SystemTray.isSupported()) {
       systemTray = SystemTray.getSystemTray();
       success = setSystemTray(icon, frame.getTitle(), getMenuSistema());
     }
@@ -53,17 +49,14 @@ public class IconTray implements ActionListener
   }
 
   @Override
-  public void actionPerformed(ActionEvent e)
-  {
+  public void actionPerformed(ActionEvent e) {
     boolean resp = false;
-    if (e.getSource().equals(mnuSalir))
-    {
+    if (e.getSource().equals(mnuSalir)) {
       ((toolsUdp) frame).detenerAll();
       System.exit(0);
       resp = true;
     }
-    if (e.getSource().equals(mnuAbout))
-    {
+    if (e.getSource().equals(mnuAbout)) {
       ((toolsUdp) frame).seeAbout();
       resp = true;
     }
@@ -72,49 +65,38 @@ public class IconTray implements ActionListener
       frame.setVisible(!frame.isVisible());
   }
 
-  public void closeTray()
-  {
+  public void closeTray() {
     if (systemTray != null && trayIcon != null)
       systemTray.remove(trayIcon);
   }
 
-  private boolean setSystemTray(Image image, String toolTip, PopupMenu menu)
-  {
+  private boolean setSystemTray(Image image, String toolTip, PopupMenu menu) {
     boolean success = false;
-    try
-    {
-      if (systemTray != null)
-      {
-        if (systemTray.getTrayIcons().length == 0)
-        {
-          if (image != null)
-          {
+    try {
+      if (systemTray != null) {
+        if (systemTray.getTrayIcons().length == 0) {
+          if (image != null) {
             trayIcon = new TrayIcon(image, toolTip);
             trayIcon.addActionListener(this);
             trayIcon.setPopupMenu(menu);
             systemTray.add(trayIcon);
             success = true;
           }
-        }
-        else
-        {
+        } else {
           systemTray.getTrayIcons()[0].setImage(image);
           systemTray.getTrayIcons()[0].setToolTip(toolTip);
           systemTray.getTrayIcons()[0].setPopupMenu(menu);
         }
       }
-    } catch (AWTException ex)
-    {
+    } catch (AWTException ex) {
       System.out.println("ERROR TRAY: " + ex.getMessage());
       success = false;
     }
     return success;
   }
 
-  private PopupMenu getMenuSistema()
-  {
-    if (ScreenKeyPopupMenu == null)
-    {
+  private PopupMenu getMenuSistema() {
+    if (ScreenKeyPopupMenu == null) {
       ScreenKeyPopupMenu = new PopupMenu();
       mnuSalir = new MenuItem("Close...");
       mnuSalir.addActionListener(this);

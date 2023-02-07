@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
 
 package udp;
@@ -15,83 +15,72 @@ import java.util.Observable;
 import utils.UtilLine;
 
 /**
- * @author Jonnattan Griffiths
- * @version 1.0 de 21-03-2012 Copyright(c)
-*/
-public class UDPListener extends Observable implements Runnable
-{
-  private int              port       = 0;
-  private byte[]           buffer     = null;
-  private DatagramSocket   socket     = null;
-  private Thread           thread     = null;
+ * @author Copyright(c) Jonnattan Griffiths
+ * @version 1.1 de 07-02-2023
+ * @since {@link  https://dev.jonnattan.com}
+ */
+@SuppressWarnings("deprecation")
+public class UDPListener extends Observable implements Runnable {
+  private int port = 0;
+  private byte[] buffer = null;
+  private DatagramSocket socket = null;
+  private Thread thread = null;
   private volatile boolean terminated = true;
-  private volatile long    mark       = 0;
+  private volatile long mark = 0;
 
-  public UDPListener(int p)
-  {
+  public UDPListener(int p) {
     port = p;
     initialize();
   }
 
-  public void start()
-  {
+  public void start() {
     terminated = false;
     thread = new Thread(this);
     thread.setName("Thread_UDP");
     thread.start();
   }
 
-  public int getPort()
-  {
+  public int getPort() {
     return port;
   }
 
   /**
    * Detiene la ejecucion del Thread de Cliente JMS
    */
-  public void stop()
-  {
+  public void stop() {
     terminated = true;
     // socket.disconnect();
     socket.close();
     if (thread != null)
       thread.interrupt();
-    try
-    {
+    try {
       if (thread != null)
         thread.join();
-    } catch (Exception e)
-    {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     thread = null;
   }
 
-  private void initialize()
-  {
+  private void initialize() {
     buffer = new byte[65000];
-    try
-    {
+    try {
       socket = new DatagramSocket(null);
       socket.setReuseAddress(true);
       socket.bind(new InetSocketAddress(port));
       // socket.setBroadcast(true);
-    } catch (SocketException ex)
-    {
+    } catch (SocketException ex) {
       ex.printStackTrace();
     }
   }
 
   @Override
-  public void run()
-  {
+  public void run() {
     System.out.println("Run listen port: " + port);
     long current = 0;
     DatagramPacket incoming = new DatagramPacket(buffer, buffer.length);
-    while (!terminated)
-    {
-      try
-      {
+    while (!terminated) {
+      try {
         socket.receive(incoming);
         byte[] data = Arrays.copyOf(buffer, incoming.getLength());
         current = System.nanoTime();
@@ -104,14 +93,12 @@ public class UDPListener extends Observable implements Runnable
         data = null;
         fline = null;
 
-      } catch (IOException ex)
-      {
+      } catch (IOException ex) {
         // ex.printStackTrace();
         break;
       }
     }
-    if (socket != null)
-    {
+    if (socket != null) {
       socket.disconnect();
       socket.close();
       socket = null;

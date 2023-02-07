@@ -53,128 +53,116 @@ import utils.UtilLine;
 import javax.swing.JSlider;
 
 /**
- * Clase sin descripcion aun
- * 
- * @author Jonnattan Griffiths
- * @since 20/12/2013
- * @version 1.0 Copyright(c) SISDEF - 2013
+ * @author Copyright(c) Jonnattan Griffiths
+ * @version 1.1 de 07-02-2023
+ * @since {@link  https://dev.jonnattan.com}
  */
-public class toolsUdp extends JFrame implements Observer, Runnable
-{
-  private static final long        serialVersionUID     = 1L;
-  private final Dimension          SIZE                 = new Dimension(881,
-      510);
-  private final Font               FONT_SYSTEM          = new Font("Monospaced",
-      Font.BOLD, 14);
-  private JLabel                   lblFrecRx            = null;
-  private DefaultListModel<String> listModel            = null;
-  private UDPWriter                udpEscritor          = null;
-  private IconTray                 trayIcon             = null;
-  private UDPListener              udpEscuchador        = null;
-  private FileManager              fileIn               = null;
-  private FileManager              fileOut              = null;
-  private String                   nameFileOut          = null;
-  private String                   simpleName           = null;
-  private boolean                  isOnlyListen         = true;
-  private JTextField               addressOut           = null;
-  private JButton                  btnExaminar          = null;
-  private JToggleButton            btnDisplay           = null;
-  private JButton                  btnLimpiar           = null;
-  private JButton                  btnListen            = null;
-  private JButton                  btnStopRec           = null;
-  private JButton                  btnPararReproduccion = null;
-  private JButton                  btnStartRec          = null;
-  private JButton                  btnReproduccion      = null;
-  private JCheckBox                checkCircular        = null;
-  private JList<String>            debugText            = null;
-  private JLabel                   lblPortInText        = null;
-  private JLabel                   lblPortOut           = null;
-  private JLabel                   lblIPOut             = null;
-  private JLabel                   lblNameFile          = null;
-  private JLabel                   lblFrec              = null;
-  private JLabel                   lblHour              = null;
-  private JLabel                   lblMS                = null;
-  private JPanel                   pnlText              = null;
-  private JLabel                   pnlGrabacion         = null;
-  private JPanel                   pnlReproduccion      = null;
-  private JPanel                   pnlReprodutor        = null;
-  private JPanel                   pnlConfigGrabacion   = null;
-  private JTextField               txtPortOut           = null;
-  private JRadioButton             rdbDataHexa          = null;
-  private JRadioButton             rdbDataString        = null;
-  private JCheckBox                chkHexaFormat        = null;
-  private JTextField               txtFrec              = null;
-  private JTextField               txtNameFile          = null;
-  private JTextField               txtNameRepro         = null;
-  private JTextField               txtPortEscucha       = null;
-  private JPanel                   pnlBtnsGrabar        = null;
-  private JPanel                   pnlInPort            = null;
-  private JPanel                   pnlFileName          = null;
-  private JPanel                   pnlCheckOut          = null;
-  private JPanel                   pnlOpcionesRep       = null;
-  private JPanel                   pnlEleccion          = null;
-  private JPanel                   pnlPortOut           = null;
-  private JPanel                   pnlBtnesOut          = null;
-  private JPanel                   pnlFrecRep           = null;
-  private JPanel                   pnlAddressOut        = null;
-  private JPanel                   pnlCenterOut         = null;
-  private JPanel                   panel                = null;
-  private JLabel                   lblHorMuestra        = null;
-  private JLabel                   lblHourData          = null;
-  private JPanel                   panel_1              = null;
-  private BlockingQueue<UtilLine>  queue                = null;
-  private Thread                   thread               = null;
-  private volatile boolean         terminated           = true;
-  private JSlider                  barrTransmit         = null;
-  private JSlider                  barrListen           = null;
+@SuppressWarnings("deprecation")
+public class toolsUdp extends JFrame implements Observer, Runnable {
+  private static final long serialVersionUID = 1L;
+  private final Dimension SIZE = new Dimension(881, 510);
+  private final Font FONT_SYSTEM = new Font("Monospaced", Font.BOLD, 14);
+  private JLabel lblFrecRx = null;
+  private DefaultListModel<String> listModel = null;
+  private UDPWriter udpEscritor = null;
+  private IconTray trayIcon = null;
+  private UDPListener udpEscuchador = null;
+  private FileManager fileIn = null;
+  private FileManager fileOut = null;
+  private String nameFileOut = null;
+  private String simpleName = null;
+  private boolean isOnlyListen = true;
+  private JTextField addressOut = null;
+  private JButton btnExaminar = null;
+  private JToggleButton btnDisplay = null;
+  private JButton btnLimpiar = null;
+  private JButton btnListen = null;
+  private JButton btnStopRec = null;
+  private JButton btnPararReproduccion = null;
+  private JButton btnStartRec = null;
+  private JButton btnReproduccion = null;
+  private JCheckBox checkCircular = null;
+  private JList<String> debugText = null;
+  private JLabel lblPortInText = null;
+  private JLabel lblPortOut = null;
+  private JLabel lblIPOut = null;
+  private JLabel lblNameFile = null;
+  private JLabel lblFrec = null;
+  private JLabel lblHour = null;
+  private JLabel lblMS = null;
+  private JPanel pnlText = null;
+  private JLabel pnlGrabacion = null;
+  private JPanel pnlReproduccion = null;
+  private JPanel pnlReprodutor = null;
+  private JPanel pnlConfigGrabacion = null;
+  private JTextField txtPortOut = null;
+  private JRadioButton rdbDataHexa = null;
+  private JRadioButton rdbDataString = null;
+  private JCheckBox chkHexaFormat = null;
+  private JTextField txtFrec = null;
+  private JTextField txtNameFile = null;
+  private JTextField txtNameRepro = null;
+  private JTextField txtPortEscucha = null;
+  private JPanel pnlBtnsGrabar = null;
+  private JPanel pnlInPort = null;
+  private JPanel pnlFileName = null;
+  private JPanel pnlCheckOut = null;
+  private JPanel pnlOpcionesRep = null;
+  private JPanel pnlEleccion = null;
+  private JPanel pnlPortOut = null;
+  private JPanel pnlBtnesOut = null;
+  private JPanel pnlFrecRep = null;
+  private JPanel pnlAddressOut = null;
+  private JPanel pnlCenterOut = null;
+  private JPanel panel = null;
+  private JLabel lblHorMuestra = null;
+  private JLabel lblHourData = null;
+  private JPanel panel_1 = null;
+  private BlockingQueue<UtilLine> queue = null;
+  private Thread thread = null;
+  private volatile boolean terminated = true;
+  private JSlider barrTransmit = null;
+  private JSlider barrListen = null;
 
-  public toolsUdp()
-  {
+  public toolsUdp() {
     initComponents();
     queue = new LinkedBlockingQueue<UtilLine>();
 
     addWindowListener(new WindowAdapter() {
       @Override
-      public void windowClosing(WindowEvent e)
-      {
+      public void windowClosing(WindowEvent e) {
         detenerAll();
         System.exit(0);
       }
     });
   }
 
-  public void startMain()
-  {
+  public void startMain() {
     this.terminated = false;
     thread = new Thread(this);
     thread.setName("MAIN_Thread");
     thread.start();
   }
 
-  protected void stopMain()
-  {
+  protected void stopMain() {
     this.terminated = true;
     if (thread != null)
       thread.interrupt();
-    try
-    {
+    try {
       if (thread != null)
         thread.join();
-    } catch (Exception e)
-    {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     thread = null;
     queue.clear();
   }
 
-  private URL getIconPath(String iconFileName)
-  {
+  private URL getIconPath(String iconFileName) {
     return getClass().getResource("/icon/" + iconFileName);
   }
 
-  private void initComponents()
-  {
+  private void initComponents() {
     BufferedImage imageIcon = PixelsUtils.getInstance()
         .fileToBufferedImage(getIconPath("icon.png"), 16, 16);
     setIconImage(imageIcon);
@@ -277,8 +265,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     chkHexaFormat.setSelected(true);
     chkHexaFormat.setText("Standard format");
     chkHexaFormat.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         sendFormatoSisdefActionPerformed(evt);
       }
     });
@@ -315,8 +302,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     lblMS.setText("[ms]");
 
     txtFrec.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         txtSetFrec();
       }
     });
@@ -353,26 +339,22 @@ public class toolsUdp extends JFrame implements Observer, Runnable
 
     addressOut.setText("192.168.255.255");
     checkCircular.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         checkCircular();
       }
     });
     btnPararReproduccion.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnStopPlay();
       }
     });
     btnReproduccion.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnPlay();
       }
     });
     btnExaminar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         examinar();
       }
     });
@@ -464,21 +446,18 @@ public class toolsUdp extends JFrame implements Observer, Runnable
 
     btnStopRec.setText("Stop");
     btnStopRec.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnStopRec();
       }
     });
     btnStopRec.setEnabled(false);
     btnStartRec.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnRec();
       }
     });
     btnListen.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnListen();
       }
     });
@@ -519,8 +498,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     btnDisplay.setFont(FONT_SYSTEM);
     btnDisplay.setText("Display Off");
     btnDisplay.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnDisplay();
       }
     });
@@ -532,8 +510,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
 
     btnLimpiar.setText("Clean");
     btnLimpiar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         btnLimpiar();
       }
     });
@@ -546,8 +523,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     rdbDataHexa.setText("Hexa");
     rdbDataHexa.setSelected(true);
     rdbDataHexa.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         rdbDataHexa();
       }
     });
@@ -560,8 +536,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     rdbDataString.setFont(FONT_SYSTEM);
     rdbDataString.setSelected(false);
     rdbDataString.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent evt)
-      {
+      public void actionPerformed(ActionEvent evt) {
         rdbDataString();
       }
     });
@@ -579,15 +554,13 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     pack();
   }
 
-  private void examinar()
-  {
+  private void examinar() {
     JFileChooser fchooser = new JFileChooser();
     fchooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fchooser.setMultiSelectionEnabled(false);
     fchooser.setCurrentDirectory(new File("."));
     int res = fchooser.showOpenDialog(null);
-    if (res == JFileChooser.APPROVE_OPTION)
-    {
+    if (res == JFileChooser.APPROVE_OPTION) {
       File f = fchooser.getSelectedFile();
       simpleName = f.getName().toString();
       nameFileOut = f.getAbsolutePath().toString();
@@ -596,8 +569,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
   }
 
   /** Ckeck que indica si el archivo que se preproduce sera en formato SISDEF */
-  private void sendFormatoSisdefActionPerformed(ActionEvent evt)
-  {
+  private void sendFormatoSisdefActionPerformed(ActionEvent evt) {
     lblFrec.setVisible(!chkHexaFormat.isSelected());
     txtFrec.setVisible(!chkHexaFormat.isSelected());
     lblMS.setVisible(!chkHexaFormat.isSelected());
@@ -605,28 +577,21 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     lblHourData.setVisible(chkHexaFormat.isSelected());
   }
 
-  private void txtSetFrec()
-  {
-    if (!chkHexaFormat.isSelected())
-    {
-      if (txtFrec.getText().matches("[0-9]*"))
-      {
-        try
-        {
+  private void txtSetFrec() {
+    if (!chkHexaFormat.isSelected()) {
+      if (txtFrec.getText().matches("[0-9]*")) {
+        try {
 
           long frec = Integer.parseInt(txtFrec.getText());
           if (fileOut != null)
             fileOut.setFrecuency_ms(frec);
-        } catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
           // ex.printStackTrace();
           String strError = "Only Number Frecuency.";
           JOptionPane.showMessageDialog(null, strError, "Error",
               JOptionPane.ERROR_MESSAGE);
         }
-      }
-      else
-      {
+      } else {
         String strError = "Only Number Frecuency.";
         JOptionPane.showMessageDialog(null, strError, "Error",
             JOptionPane.ERROR_MESSAGE);
@@ -634,29 +599,23 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }
   }
 
-  private void checkCircular()
-  {
+  private void checkCircular() {
     if (fileOut != null)
       fileOut.setCircular(checkCircular.isSelected());
   }
 
-  private void rdbDataHexa()
-  {
+  private void rdbDataHexa() {
     rdbDataString.setSelected(!rdbDataHexa.isSelected());
   }
 
-  private void rdbDataString()
-  {
+  private void rdbDataString() {
     rdbDataHexa.setSelected(!rdbDataString.isSelected());
   }
 
-  private void btnListen()
-  {
+  private void btnListen() {
     int port = 0;
-    if (udpEscuchador == null)
-    {
-      try
-      {
+    if (udpEscuchador == null) {
+      try {
         startMain();
         port = Integer.parseInt(txtPortEscucha.getText());
         udpEscuchador = new UDPListener(port);
@@ -669,8 +628,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
         setTitle("Listen data in port " + port);
         pnlGrabacion.setBackground(Color.ORANGE);
         isOnlyListen = true;
-      } catch (NumberFormatException ex)
-      {
+      } catch (NumberFormatException ex) {
         String strError = "Listen port is not number field\nProbe other value.";
         JOptionPane.showMessageDialog(null, strError, "Error",
             JOptionPane.ERROR_MESSAGE);
@@ -681,13 +639,11 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }
   }
 
-  private void btnRec()
-  {
+  private void btnRec() {
     if (udpEscuchador == null)
       btnListen();
     // ----------------------------------------------------------
-    if (udpEscuchador != null)
-    {
+    if (udpEscuchador != null) {
       fileIn = new FileManager(txtNameFile.getText(), null);
       fileIn.setTitle("Recording Port: " + udpEscuchador.getPort());
       fileIn.start();
@@ -701,8 +657,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }
   }
 
-  private void btnStopRec()
-  {
+  private void btnStopRec() {
     if (udpEscuchador != null)
       udpEscuchador.stop();
     if (fileIn != null)
@@ -723,37 +678,30 @@ public class toolsUdp extends JFrame implements Observer, Runnable
    * 
    * @param evt
    */
-  private void btnPlay()
-  {
+  private void btnPlay() {
     int portOut = -1;
     long frecuency = 10;
     // -------------------------------------------------------
-    try
-    {
-      if (!chkHexaFormat.isSelected())
-      {
+    try {
+      if (!chkHexaFormat.isSelected()) {
         frecuency = Integer.parseInt(txtFrec.getText());
       }
-    } catch (NumberFormatException ex)
-    {
+    } catch (NumberFormatException ex) {
       JOptionPane.showMessageDialog(this,
           "ERROR: Incorrect Frecuency, please enter a number", "Error",
           JOptionPane.ERROR_MESSAGE);
       return;
     }
     // -------------------------------------------------------
-    try
-    {
+    try {
       portOut = Integer.parseInt(this.txtPortOut.getText());
-    } catch (NumberFormatException ex)
-    {
+    } catch (NumberFormatException ex) {
       JOptionPane.showMessageDialog(this, "Please, Writte numeric port out",
           "ERROR", JOptionPane.ERROR_MESSAGE);
       return;
     }
     // -------------------------------------------------------
-    if (simpleName == null)
-    {
+    if (simpleName == null) {
       JOptionPane.showMessageDialog(this,
           "Please, select a file using search button", "ERROR",
           JOptionPane.ERROR_MESSAGE);
@@ -785,8 +733,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     btnReproduccion.setEnabled(false);
   }
 
-  private void btnStopPlay()
-  {
+  private void btnStopPlay() {
     fileOut.stop();
     fileOut = null;
     udpEscritor.stop();
@@ -799,35 +746,29 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     setTitle("Listen/Record/Reproduction Tool");
   }
 
-  private void btnLimpiar()
-  {
+  private void btnLimpiar() {
     SwingUtilities.invokeLater(new Runnable() {
-      public void run()
-      {
+      public void run() {
         listModel.removeAllElements();
       }
     });
   }
 
-  private void btnDisplay()
-  {
+  private void btnDisplay() {
     if (btnDisplay.isSelected())
       btnDisplay.setText("Display On");
     else
       btnDisplay.setText("Display Off");
   }
 
-  public void update(Observable o, Object arg)
-  {
+  public void update(Observable o, Object arg) {
     UtilLine utilLine = (UtilLine) arg;
-    if (o instanceof UDPListener)
-    {
+    if (o instanceof UDPListener) {
       if (!isOnlyListen && fileIn != null)
         fileIn.sendToFile(utilLine);
       queue.add(utilLine.uglyClone("Rx"));
     }
-    if (o instanceof FileManager)
-    {
+    if (o instanceof FileManager) {
       if (udpEscritor != null)
         udpEscritor.sendToUDP(utilLine);
       txtFrec.setText(String.format("%d", fileOut.getFrecuency()));
@@ -835,12 +776,10 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }
   }
 
-  public void seeAbout()
-  {
+  public void seeAbout() {
     EventQueue.invokeLater(new Runnable() {
       @Override
-      public void run()
-      {
+      public void run() {
         About frame = new About();
         Point current = getLocation();
         Point point = new Point(
@@ -853,25 +792,20 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     });
   }
 
-  private void ShowDateTime()
-  {
+  private void ShowDateTime() {
     new Thread(new Runnable() {
       @Override
-      public void run()
-      {
+      public void run() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
         Date currentDate = new Date();
         lblHour.setText(format.format(currentDate));
-        while (true)
-        {
-          try
-          {
+        while (true) {
+          try {
             Thread.sleep(1000);
             currentDate.setTime(System.currentTimeMillis());
             lblHour.setText(format.format(currentDate));
 
-          } catch (InterruptedException ex)
-          {
+          } catch (InterruptedException ex) {
             System.err.println("ERROR: Hour " + ex.getMessage());
           }
 
@@ -880,8 +814,7 @@ public class toolsUdp extends JFrame implements Observer, Runnable
     }).start();
   }
 
-  public void detenerAll()
-  {
+  public void detenerAll() {
     if (udpEscuchador != null)
       udpEscuchador.stop();
     if (fileIn != null)
@@ -892,33 +825,26 @@ public class toolsUdp extends JFrame implements Observer, Runnable
   }
 
   @Override
-  public void run()
-  {
-    while (!terminated)
-    {
-      try
-      {
+  public void run() {
+    while (!terminated) {
+      try {
         UtilLine pl = queue.take();
         // System.out.println(
         // "Wait " + (int) pl.getTimeMark() + " ns -> " + msec + " ms");
         Thread.sleep(pl.getWaitMS());
         addDebug(pl, queue.size());
         pl = null;
-      } catch (Exception e)
-      {
+      } catch (Exception e) {
         break;
       }
     }
     System.out.println("Visualizador Finish");
   }
 
-  private void addDebug(final UtilLine line, final int size)
-  {
+  private void addDebug(final UtilLine line, final int size) {
     SwingUtilities.invokeLater(new Runnable() {
-      public void run()
-      {
-        if (!btnDisplay.isSelected())
-        {
+      public void run() {
+        if (!btnDisplay.isSelected()) {
           while (listModel.size() >= 500)
             listModel.remove(0);
           String current = "";
@@ -937,13 +863,10 @@ public class toolsUdp extends JFrame implements Observer, Runnable
   }
 
   /**
-   * @param args
-   *          the command line arguments
+   * @param args the command line arguments
    */
-  public static void main(String args[])
-  {
-    try
-    {
+  public static void main(String args[]) {
+    try {
       // UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
       // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
       // UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -961,23 +884,18 @@ public class toolsUdp extends JFrame implements Observer, Runnable
       // UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
       // UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
       // UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
-    } catch (ClassNotFoundException ex)
-    {
+    } catch (ClassNotFoundException ex) {
       ex.printStackTrace();
-    } catch (InstantiationException ex)
-    {
+    } catch (InstantiationException ex) {
       ex.printStackTrace();
-    } catch (IllegalAccessException ex)
-    {
+    } catch (IllegalAccessException ex) {
       ex.printStackTrace();
-    } catch (UnsupportedLookAndFeelException ex)
-    {
+    } catch (UnsupportedLookAndFeelException ex) {
       ex.printStackTrace();
     }
 
     java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run()
-      {
+      public void run() {
         toolsUdp ventana = new toolsUdp();
         ventana.setVisible(true);
       }

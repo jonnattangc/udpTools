@@ -16,26 +16,21 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 /**
- * Panel ABOUT
- * 
- * @author Jonnattan Griffiths
- * @since 20/12/2013
- * @version 1.0 Copyright(c) SISDEF - 2013
+ * @author Copyright(c) Jonnattan Griffiths
+ * @version 1.1 de 07-02-2023
+ * @since {@link https://dev.jonnattan.com}
  */
-public class About extends JDialog
-{
+public class About extends JDialog {
   private static final long serialVersionUID = 1L;
-  private JLabel            lblTitle         = null;
-  private JLabel            txtVersion       = null;
-  private JEditorPane       txtPane          = null;
+  private JLabel lblTitle = null;
+  private JLabel txtVersion = null;
+  private JEditorPane txtPane = null;
 
-  public About()
-  {
+  public About() {
     initComponents();
   }
 
-  private void initComponents()
-  {
+  private void initComponents() {
     setSize(new Dimension(342, 170));
     setMinimumSize(getSize());
     setMaximumSize(getSize());
@@ -83,8 +78,7 @@ public class About extends JDialog
 
     JButton btnNewButton = new JButton("Cerrar");
     btnNewButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e)
-      {
+      public void actionPerformed(ActionEvent e) {
         dispose();
       }
     });

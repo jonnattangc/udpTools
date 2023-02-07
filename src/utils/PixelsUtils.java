@@ -26,27 +26,23 @@ import javax.swing.ImageIcon;
  * 
  * @author Eliana Providel
  */
-public class PixelsUtils
-{
+public class PixelsUtils {
 
   private static PixelsUtils pixelUtils = null;
 
   /**
    * Contructor privado
    */
-  private PixelsUtils()
-  {
+  private PixelsUtils() {
   }
 
-  public static PixelsUtils getInstance()
-  {
+  public static PixelsUtils getInstance() {
     if (pixelUtils == null)
       pixelUtils = new PixelsUtils();
     return pixelUtils;
   }
 
-  public BufferedImage createBufferedImage(int width, int height)
-  {
+  public BufferedImage createBufferedImage(int width, int height) {
     return new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
   }
 
@@ -55,31 +51,23 @@ public class PixelsUtils
    * de la imagen entregada, partiendo desde la posición x,y hasta completar el
    * area especificada
    * 
-   * @param pic
-   *          imagen base
-   * @param x
-   *          posicion inicial horizontal
-   * @param y
-   *          posicion inicial vertical
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pic    imagen base
+   * @param x      posicion inicial horizontal
+   * @param y      posicion inicial vertical
+   * @param width  ancho
+   * @param height alto
    * @return arreglo de pixeles
    */
   public Color[][] getPixels(BufferedImage pic, int x, int y, int width,
-      int height)
-  {
+      int height) {
     assert pic != null : "Error en getpixel por la imagen";
     // System.out.println("getPixels: x="+x+" y="+y+" width="+width+"
     // height="+height);
     Color bitmap[][] = new Color[height][width];
     int a = 0, b = 0;
-    for (int i = y; i < (y + height); i++)
-    {
+    for (int i = y; i < (y + height); i++) {
       b = 0;
-      for (int j = x; j < (x + width); j++)
-      {
+      for (int j = x; j < (x + width); j++) {
         bitmap[a][b] = new Color(pic.getRGB(j, i));
         b++;
       }
@@ -92,21 +80,17 @@ public class PixelsUtils
   /**
    * retorna un bufferedImage del tamaño especificado
    * 
-   * @param path
-   *          ruta de la imagen
+   * @param path ruta de la imagen
    */
-  public BufferedImage fileToBufferedImage(String path, int width, int height)
-  {
+  public BufferedImage fileToBufferedImage(String path, int width, int height) {
     PixelsUtils pixelsUtils = PixelsUtils.getInstance();
     assert !path.isEmpty() : "Error al abrir imagen, path no especificado";
     BufferedImage imagen = null;
-    try
-    {
+    try {
 
       imagen = ImageIO.read(new File(path));
       imagen = pixelsUtils.resizeImage(imagen, width, height);
-    } catch (IOException ex)
-    {
+    } catch (IOException ex) {
       Logger.getLogger(PixelsUtils.class.getName()).log(Level.SEVERE, null, ex);
     }
     return imagen;
@@ -115,24 +99,18 @@ public class PixelsUtils
   /**
    * retorna un bufferedImage del tamaño especificado
    * 
-   * @param path
-   *          ruta de la imagen
+   * @param path ruta de la imagen
    */
-  public BufferedImage fileToBufferedImage(URL path, int width, int height)
-  {
+  public BufferedImage fileToBufferedImage(URL path, int width, int height) {
     PixelsUtils pixelsUtils = PixelsUtils.getInstance();
     BufferedImage imagen = null;
-    try
-    {
-      if (path != null)
-      {
+    try {
+      if (path != null) {
         imagen = ImageIO.read(path);
         imagen = pixelsUtils.resizeImage(imagen, width, height);
-      }
-      else
+      } else
         System.err.println("Icon Path is null");
-    } catch (IOException ex)
-    {
+    } catch (IOException ex) {
       System.err.println("Error al abrir " + path.toExternalForm());
       Logger.getLogger(PixelsUtils.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -142,25 +120,20 @@ public class PixelsUtils
   /**
    * Transforma de java.awt.Image a java.awt.image.BufferedImage
    * 
-   * @param image
-   *          imagen como Image
+   * @param image imagen como Image
    * @return imagen como BufferedImage
    */
-  public BufferedImage toBufferedImage(Image image)
-  {
-    if (image instanceof BufferedImage)
-    {
+  public BufferedImage toBufferedImage(Image image) {
+    if (image instanceof BufferedImage) {
       return (BufferedImage) image;
     }
     image = new ImageIcon(image).getImage();
     boolean hasAlpha = hasAlpha(image);
     BufferedImage bimage = null;
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    try
-    {
+    try {
       int transparency = Transparency.OPAQUE;
-      if (hasAlpha)
-      {
+      if (hasAlpha) {
         transparency = Transparency.BITMASK;
       }
 
@@ -168,15 +141,12 @@ public class PixelsUtils
       GraphicsConfiguration gc = gs.getDefaultConfiguration();
       bimage = gc.createCompatibleImage(image.getWidth(null),
           image.getHeight(null), transparency);
-    } catch (HeadlessException e)
-    {
+    } catch (HeadlessException e) {
     }
 
-    if (bimage == null)
-    {
+    if (bimage == null) {
       int type = BufferedImage.TYPE_INT_RGB;
-      if (hasAlpha)
-      {
+      if (hasAlpha) {
         type = BufferedImage.TYPE_INT_ARGB;
       }
       bimage = new BufferedImage(image.getWidth(null), image.getHeight(null),
@@ -192,22 +162,16 @@ public class PixelsUtils
   /**
    * Retorna el color promedio de un arreglo de pixeles
    * 
-   * @param pixels
-   *          arreglo de pixeles base
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pixels arreglo de pixeles base
+   * @param width  ancho
+   * @param height alto
    * @return color promedio
    */
   public int getAverageColorOfPixelArray(Color[][] pixels, int width,
-      int height)
-  {
+      int height) {
     int red = 0, green = 0, blue = 0, alpha = 0;
-    for (int j = 0; j < height; j++)
-    {
-      for (int i = 0; i < width; i++)
-      {
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
         red += pixels[j][i].getRed();
         green += pixels[j][i].getGreen();
         blue += pixels[j][i].getBlue();
@@ -222,19 +186,15 @@ public class PixelsUtils
         | ((green << 8) & 0x0000FF00) | ((blue) & 0x000000FF);
   }
 
-  public int getGreenIntesity(byte intensity)
-  {
+  public int getGreenIntesity(byte intensity) {
     return ((((int) intensity) << 8) & 0x0000FF00);
   }
 
-  public void saveBufferedImageToPngFile(Object objectToSave, String path)
-  {
-    try
-    {
+  public void saveBufferedImageToPngFile(Object objectToSave, String path) {
+    try {
       BufferedImage imageToSave = (BufferedImage) objectToSave;
       ImageIO.write(imageToSave, "png", new File(path + ".png"));
-    } catch (IOException ex)
-    {
+    } catch (IOException ex) {
       Logger.getLogger(PixelsUtils.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
@@ -242,24 +202,18 @@ public class PixelsUtils
   /**
    * Calcula la varianza de los pixeles de un arreglo dado
    * 
-   * @param pixels
-   *          arreglo de pixeles
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pixels arreglo de pixeles
+   * @param width  ancho
+   * @param height alto
    * @return varianza de intensidad de los pixeles del arreglo
    */
   public double getVarianceOfPixelsArray(Color[][] pixels, int width,
-      int height)
-  {
+      int height) {
     assert pixels.length > 0 : "ERROR al obtener la diferencia máxima de pixeles";
     double sum = 0;
     int average = getAverageIntensityOfPixelsArray(pixels, width, height);
-    for (int j = 0; j < height; j++)
-    {
-      for (int i = 0; i < width; i++)
-      {
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
         double res = Math
             .pow(getIntensityOfRGBColor(pixels[j][i].getRGB()) - average, 2);
         sum += res;
@@ -271,22 +225,17 @@ public class PixelsUtils
   /**
    * retorna un vector ordenado de intensidad de pixeles
    * 
-   * @param pixels
-   *          arreglo de pixeles
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pixels arreglo de pixeles
+   * @param width  ancho
+   * @param height alto
    * @return vector ordenado de intensidad de pixeles
    */
+  @SuppressWarnings("deprecation")
   public Vector<Integer> getSortedVectorOfIntensities(Color[][] pixels,
-      int width, int height)
-  {
+      int width, int height) {
     Vector<Integer> vec = new Vector<Integer>(width * height);
-    for (int j = 0; j < height; j++)
-    {
-      for (int i = 0; i < width; i++)
-      {
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
         vec.add(new Integer(getIntensityOfRGBColor(pixels[j][i].getRGB())));
       }
     }
@@ -297,34 +246,26 @@ public class PixelsUtils
   /**
    * Retorna la diferencia maxima entre 2 pixeles de una arreglo dado
    * 
-   * @param pixels
-   *          arreglo de pixeles
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pixels arreglo de pixeles
+   * @param width  ancho
+   * @param height alto
    * @return diferencia maxima
    */
-  public int getMaxDiffOfPixelsArray(Color[][] pixels, int width, int height)
-  {
+  public int getMaxDiffOfPixelsArray(Color[][] pixels, int width, int height) {
     assert pixels.length > 0 : "ERROR al obtener la diferencia máxima de pixeles";
     int value;
     int min = 766, max = -1;
     int minPos[] = new int[2];
     int maxPos[] = new int[2];
-    for (int j = 0; j < height; j++)
-    {
-      for (int i = 0; i < width; i++)
-      {
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
         value = getIntensityOfRGBColor(pixels[j][i].getRGB());
-        if (value < min)
-        {
+        if (value < min) {
           min = value;
           minPos[0] = j;
           minPos[1] = i;
         }
-        if (value > max)
-        {
+        if (value > max) {
           max = value;
           maxPos[0] = j;
           maxPos[1] = i;
@@ -339,23 +280,17 @@ public class PixelsUtils
   /**
    * Calcula el promedio de intensidad de un arreglo dado
    * 
-   * @param pixels
-   *          arreglo de pixeles
-   * @param width
-   *          ancho
-   * @param height
-   *          alto
+   * @param pixels arreglo de pixeles
+   * @param width  ancho
+   * @param height alto
    * @return promedio de intensidad
    */
   private int getAverageIntensityOfPixelsArray(Color[][] pixels, int width,
-      int height)
-  {
+      int height) {
     assert pixels.length > 0 : "ERROR al obtener el promedio";
     int sum = 0, value;
-    for (int j = 0; j < height; j++)
-    {
-      for (int i = 0; i < width; i++)
-      {
+    for (int j = 0; j < height; j++) {
+      for (int i = 0; i < width; i++) {
         value = getIntensityOfRGBColor(pixels[j][i].getRGB());
         sum += value;
       }
@@ -367,34 +302,26 @@ public class PixelsUtils
    * redimensiona una imagen manteniendo su aspecto, para cuadrar el tamaño
    * dado
    * 
-   * @param myimg
-   *          imagen a redimensionar
-   * @param width
-   *          ancho máximo
-   * @param height
-   *          alto máximo
+   * @param myimg  imagen a redimensionar
+   * @param width  ancho máximo
+   * @param height alto máximo
    * @return imagen redimensionada
    */
-  public BufferedImage resizeImage(BufferedImage myimg, int width, int height)
-  {
+  public BufferedImage resizeImage(BufferedImage myimg, int width, int height) {
     assert myimg != null : "Error en la imagen en resizeImage(..)";
     BufferedImage imageResized;
     float ratio = ((float) myimg.getWidth()) / ((float) myimg.getHeight());
-    if (ratio >= ((float) width / (float) height))
-    {
+    if (ratio >= ((float) width / (float) height)) {
       imageResized = toBufferedImage(
           myimg.getScaledInstance(width, -1, Image.SCALE_SMOOTH));
-    }
-    else
-    {
+    } else {
       imageResized = toBufferedImage(
           myimg.getScaledInstance(-1, height, Image.SCALE_SMOOTH));
     }
     return imageResized;
   }
 
-  private int getDifferenceBetweenTwoColorInts(int c1, int c2)
-  {
+  private int getDifferenceBetweenTwoColorInts(int c1, int c2) {
     assert c1 >= 0
         && c2 >= 0 : "Error al encontrar la diferencia entre colores";
     return (int) Math
@@ -404,25 +331,20 @@ public class PixelsUtils
             + Math.pow(((c1 & 0xff) - (c2 & 0xff)), 2));
   }
 
-  private int getIntensityOfRGBColor(int rgb)
-  {
+  private int getIntensityOfRGBColor(int rgb) {
     assert rgb >= 0 : "Error de RGB";
     return (((rgb >> 16) & 0xff) + ((rgb >> 8) & 0xff) + (rgb & 0xff));
   }
 
-  private boolean hasAlpha(Image image)
-  {
-    if (image instanceof BufferedImage)
-    {
+  private boolean hasAlpha(Image image) {
+    if (image instanceof BufferedImage) {
       BufferedImage bimage = (BufferedImage) image;
       return bimage.getColorModel().hasAlpha();
     }
     PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
-    try
-    {
+    try {
       pg.grabPixels();
-    } catch (InterruptedException e)
-    {
+    } catch (InterruptedException e) {
     }
 
     ColorModel cm = pg.getColorModel();
