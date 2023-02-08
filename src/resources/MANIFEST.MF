@@ -1,2 +1,11 @@
+Manifest-Version: 1.0
+Created-By: 1.2.0 (Jonnattan SpA)
 Main-Class: program.toolsUdp
 Class-Path: libs/JTattoo-1.6.11.jar
+Name: UDPTools
+Specification-Title: "Tool for listen udp port and recorder into the file text" 
+Specification-Version: "1.2.0"
+Specification-Vendor: "Jonnattan Org".
+Implementation-Title: "Modificaciones Varias 2023" 
+Implementation-Version: "build45-2023"
+Implementation-Vendor: "Jonnattan SpA"
